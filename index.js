@@ -73,3 +73,7 @@ const truthTableMaker = (statement, ...variables) => {
 	}
 	console.log(output.join("\n"));
 };
+
+
+// Example: (I'd suggest not running thing, it's 200+ lines)
+truthTableMaker("((!a && b) || (c && !d)) === ((e || !f) && (!g || h))", "a", "b", "c", "d", "e", "f", "g", "h");
