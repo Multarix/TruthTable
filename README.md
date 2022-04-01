@@ -4,7 +4,7 @@ Can also convert some of the dumb math jargon like "¬" meaning "not" or "∧" m
 
 Currently supported converisons:
 
-> `¬` = `!`
-> `∨` = `||`
-> `∧` = `&&`
-> `↔` = `===`;
+- `¬` = `!`<br>
+- `∨` = `||`<br>
+- `∧` = `&&`<br>
+- `↔` = `===`<br>
