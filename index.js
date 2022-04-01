@@ -1,20 +1,4 @@
 /**
- * Turns all of the items within "vari" into a variable, using the values of "val" as the value, then evaluates the given statement
- * @argument {string[]} vari - An array of strings that will become variable names
- * @argument {string[]} val - Typically an array of booleans that are assigned to their respective variable names
- * @argument {string} statement - A statement of some sort that is evaluated
- * @returns {string} - The result of the evaluated statement
- **/
-function getOutput(vari, val, statement){
-	for(let i = 0; vari.length > i; i++){
-		eval(`this.${vari[i]} = ${val[i]}`); // Set vari[i] = val[i] within the function so they can be referenced easily.
-	}
-
-	const output = eval(statement); // Evaluate the statement, eval is dangerous.
-	return output.toString();
-}
-
-/**
  * Checks the length of the array and increases the binary number accordingly.
  * @argument {string[]} array The array to check the length of.
  * @returns {string} - A binary object
@@ -36,8 +20,8 @@ const binaryMaker = (array) => {
 const truthTableMaker = (statement, ...variables) => {
 	const allVars = [...variables];
 
-	const jsFunc = statement.replace(/¬/g, "!").replace(/∨/g, "||").replace(/∧/g, "&&").replace(/↔/g, "===");
-	const dumbStatement = jsFunc.replace(/!/g, "¬").replace(/\|\|/g, "∨").replace(/&&/g, "∧").replace(/===/g, "↔");
+	const jsFunc = statement.replace(/¬/g, "!").replace(/∨/g, "||").replace(/∧/g, "&&").replace(/↔/g, "==="); // Bunch of replacements in case the inputted string with too mathy
+	const dumbStatement = jsFunc.replace(/!/g, "¬").replace(/\|\|/g, "∨").replace(/&&/g, "∧").replace(/===/g, "↔"); // Then we make another bunch of replacements to be used within the column header
 
 	const output = [];
 	const firstLine = `|   ${allVars.join("   |   ")}   | ${dumbStatement}`;
@@ -47,10 +31,11 @@ const truthTableMaker = (statement, ...variables) => {
 	}
 	output.push(firstLine, secondLine);
 
-	let currentLineBinary = binaryMaker(allVars);
-	let currentLineDecimal = parseInt(currentLineBinary, 2);
+	let currentLineBinary = binaryMaker(allVars); // Using binary and counting down to 0 means no 2 truth table lines will ever be the exact same true/ false statements as another
+	let currentLineDecimal = parseInt(currentLineBinary, 2); // And the decimal form so it's easy to subtract 1 every loop
 
 	while(currentLineDecimal >= 0){
+		// We have to keep the binary the same bit length otherwise if we don't, we'll lose false values on the values at the start the closer we get to 0
 		while(allVars.length > currentLineBinary.length){
 			currentLineBinary = "0" + currentLineBinary;
 		}
@@ -65,6 +50,7 @@ const truthTableMaker = (statement, ...variables) => {
 			}
 		}
 
+		// This is so that true and false always take up the same amount of characters - Makes for a cleaner looking output
 		const tralseString = [];
 		for(const tf of tralse){
 			if(tf){
@@ -79,12 +65,11 @@ const truthTableMaker = (statement, ...variables) => {
 		let line = tralseString.join(" | ");
 		line = `| ${line} | -> ${functionOutput}`;
 
-		output.push(line.replace(/false/g, colors.red(false)).replace(/true/g, colors.green(true)));
+		if(colors) line = line.replace(/false/g, colors.red(false)).replace(/true/g, colors.green(true)); // If you have colors and you want some flair in your console
+		output.push(line);
+
 		currentLineDecimal -= 1;
 		currentLineBinary = currentLineDecimal.toString(2);
 	}
 	console.log(output.join("\n"));
 };
-
-
-truthTableMaker("(!a && b) || (a && !b)", "a", "b");
