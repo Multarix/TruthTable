@@ -1,9 +1,25 @@
 /**
+ * Turns all of the items within "vari" into a variable, using the values of "val" as the value, then evaluates the given statement
+ * @argument {string[]} vari - An array of strings that will become variable names
+ * @argument {string[]} val - Typically an array of booleans that are assigned to their respective variable names
+ * @argument {string} statement - A statement of some sort that is evaluated
+ * @returns {string} - The result of the evaluated statement
+ **/
+function getOutput(vari, val, statement) {
+	for(let i = 0; vari.length > i; i++){
+		eval(`this.${vari[i]} = ${val[i]}`); // Set vari[i] = val[i] within the function so they can be referenced easily.
+	}
+
+	const output = eval(statement); // Evaluate the statement, eval is dangerous.
+	return output.toString();
+}
+
+
+/**
  * Checks the length of the array and increases the binary number accordingly.
  * @argument {string[]} array The array to check the length of.
  * @returns {string} - A binary object
-
- **/
+**/
 const binaryMaker = (array) => {
 	let binary = "";
 	while(array.length > binary.length){
@@ -12,11 +28,12 @@ const binaryMaker = (array) => {
 	return binary;
 };
 
+
 /**
  * @argument {string} statement - A statement that will be evaluted against various true or false arguments
  * @argument {...string} variables - The names of the various values that will be tested against within the statement
  * @returns {string} - A truth table
- **/
+**/
 const truthTableMaker = (statement, ...variables) => {
 	const allVars = [...variables];
 
@@ -65,7 +82,7 @@ const truthTableMaker = (statement, ...variables) => {
 		let line = tralseString.join(" | ");
 		line = `| ${line} | -> ${functionOutput}`;
 
-		if(colors) line = line.replace(/false/g, colors.red(false)).replace(/true/g, colors.green(true)); // If you have colors and you want some flair in your console
+		// if(colors) line = line.replace(/false/g, colors.red(false)).replace(/true/g, colors.green(true)); // If you want some flair in your console
 		output.push(line);
 
 		currentLineDecimal -= 1;
@@ -75,5 +92,5 @@ const truthTableMaker = (statement, ...variables) => {
 };
 
 
-// Example: (I'd suggest not running thing, it's 200+ lines)
+// Example: (I'd suggest not running this thing, it's 200+ lines)
 truthTableMaker("((!a && b) || (c && !d)) === ((e || !f) && (!g || h))", "a", "b", "c", "d", "e", "f", "g", "h");
