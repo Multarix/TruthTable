@@ -1,0 +1,32 @@
+{
+	"name": "truth-table",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "Create a truth table from a given expression",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Multarix/TruthTable.git"
+	},
+	"author": "Multarix",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Multarix/TruthTable/issues"
+	},
+	"homepage": "https://projects.multarix.com/truth-table/",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"devDependencies": {
+		"@types/node": "^20.1.0",
+		"@typescript-eslint/eslint-plugin": "^5.59.2",
+		"@typescript-eslint/parser": "^5.59.2",
+		"eslint": "^8.40.0",
+		"tsc-hooks": "^1.1.2"
+	},
+	"prepublish": "tsc",
+	"scripts": {
+		"build": "tsc"
+	},
+	"dependencies": {
+		"chalk": "^5.3.0"
+	}
+}
