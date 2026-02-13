@@ -40,7 +40,7 @@ const variables = ["a", "b", "c", "d"];
 
 const truthTable = new TruthTable(expression, variables);
 
-truthTable.log(); // Results in the below being outputt to the console:
+truthTable.log(); // Results in the below being output to the console:
 
 /*
 |   a   |   b   |   c   |   d   | ((¬a ∧ b) v (c ∧ (¬b v ¬d)) ∧ (¬c ↔ b))
